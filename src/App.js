@@ -4,8 +4,8 @@ import './App.css';
 import Navbar from './components/Navbar';
 import TextForm from './components/TextForm';
 import React,{ useState } from 'react';
-// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import About from './components/About';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import About from './components/About';
 import Alert from './components/Alert';
 
 
@@ -29,7 +29,19 @@ function App() {
 
     
   }
-  const toggleMode = ()=>{
+
+  const removeBodyClasses=()=>{
+    document.body.classList.remove('bg-dark')
+    document.body.classList.remove('bg-warning')
+    document.body.classList.remove('bg-light')
+    document.body.classList.remove('bg-danger')
+    document.body.classList.remove('bg-success')
+    document.body.classList.remove('bg-primary')
+  }
+  const toggleMode = (cls)=>{
+    removeBodyClasses();
+    console.log(cls)
+    document.body.classList.add('bg-'+cls)
     if(mode === 'light'){
       setMode ('dark');
       document.body.style.backgroundColor = 'grey';
@@ -44,17 +56,17 @@ function App() {
     <>
     {/* <Navbar title="TextUtils" aboutText="About TextUtils"/> */}
     {/* <Navbar/> */}
-    {/* <Router> */}
+     <Router>
       <Navbar title="TextUtils"  mode={mode} toggleMode={toggleMode}/>
       <Alert alert={alert}/>
       <div className="container my-3">
-      {/* <Routes> */}
-      {/* <Route path="/about" exact element={<About/>} /> */}
-      {/* <Route path="/" exact element={<TextForm showAlert={showAlert} heading="Enter the text to analyze below" mode={mode}/>} /> */}
-      <TextForm showAlert={showAlert} heading="Enter the text to analyze below" mode={mode}/>
-      {/* </Routes> */}
+      <Routes>
+      <Route path="/about" exact element={<About/>}  mode={mode} />
+      <Route path="/" exact element={<TextForm showAlert={showAlert} heading="Try TextUtils - Word Counter,Character Counter,Remove extra Spaces" mode={mode}/>} />
+      {/* <TextForm showAlert={showAlert} heading="Enter the text to analyze below" mode={mode}/> */}
+      </Routes>
       </div>
-    {/* </Router> */}
+    </Router>
 
    
     </>
